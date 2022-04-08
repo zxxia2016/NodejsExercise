@@ -4,6 +4,9 @@ const fs = require('fs')
 let tbNme = `tb_${new Date().getTime()}`;
 // tbNme = `tb_1649405786104`;
 
+const OPEN_TIMER = true;
+const TIMER_DELTA = 5000;
+
 var SqliteDB = require('./sqlite.js').SqliteDB;
 var sqliteDB = new SqliteDB();
 
@@ -62,9 +65,11 @@ let f3 = function () {
                 // console.log('sheet', sheet);  //sheet is array [sheetname, sheetid, sheetnr]
                 console.log(`找到 {${cfgMonth}} 月数据成功`);
                 beginMonth3 = new Date().getTime();
-                timer3 = setInterval(() => {
-                    console.log(`month3RowCount: ${month3RowCount}`);
-                }, 1000);
+                if (OPEN_TIMER) {
+                    timer3 = setInterval(() => {
+                        console.log(`month3RowCount: ${month3RowCount}`);
+                    }, TIMER_DELTA);
+                }
             })
             .on('row', function (row) {
                 //搜索词
@@ -160,9 +165,12 @@ const f2 = function () {
                 // console.log('sheet', sheet);  //sheet is array [sheetname, sheetid, sheetnr]
                 console.log(`找到 {${month2}} 月数据成功`);
                 beginMonth2 = new Date().getTime();
-                timer2 = setInterval(() => {
-                    console.log(`month2RowCount: ${month2RowCount}`);
-                }, 1000);
+
+                if (OPEN_TIMER) {
+                    timer2 = setInterval(() => {
+                        console.log(`month2RowCount: ${month2RowCount}`);
+                    }, TIMER_DELTA);
+                }
             })
             .on('row', function (row) {
                 // console.log('row', row);  //row is a array of values or []
@@ -232,10 +240,13 @@ const f1 = function () {
             .on('sheet', function (sheet) {
                 // console.log('sheet', sheet);  //sheet is array [sheetname, sheetid, sheetnr]
                 console.log(`找到 {${month1}} 月数据成功`);
-                timer1 = setInterval(() => {
-                    console.log(`month2RowCount: ${month2RowCount}`);
-                }, 1000);
                 beginMonth1 = new Date().getTime();
+
+                if (OPEN_TIMER) {
+                    timer1 = setInterval(() => {
+                        console.log(`month2RowCount: ${month2RowCount}`);
+                    }, TIMER_DELTA);
+                }
             })
             .on('row', function (row) {
                 // console.log('row', row);  //row is a array of values or []
