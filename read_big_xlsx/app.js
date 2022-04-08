@@ -52,7 +52,6 @@ else {
 //----------------------------------------------------------------------------------
 
 let month3RowCount = 0;
-cfgMonth = 3;
 const pathMonth3 = `./data/${cfgMonth}.xlsx`;
 let beginMonth3 = 0;
 let timer3 = null;
@@ -183,12 +182,22 @@ const f2 = function () {
                 sqliteDB.getDataPromise(sql, [words]).then(function (rowData) {
                     if (rowData) {
                         // 更新数量
-                        const sql = `update ${tbNme} set SearchCount2 = ?, Rank2 = ?,
-                        X2ClickedAsin_1 = ?, X2Product_1 = ?, , X2ClickShare_1 = ?,
-                        X2ConversionShare_1 = ?, X2ClickedAsin_2 = ?, X2Product_2 = ?,
+                        const sql = `update ${tbNme} set 
+                        SearchCount2 = ?, 
+                        Rank2 = ?,
+                        X2ClickedAsin_1 = ?,
+                        X2Product_1 = ?,
+                        X2ClickShare_1 = ?,
+                        X2ConversionShare_1 = ?,
+                        X2ClickedAsin_2 = ?, 
+                        X2Product_2 = ?,
                         X2ClickShare_2 = ?,
-                        X2ConversionShare_2 = ?,X2ClickedAsin_3 = ?,X2Product_3 = ?,
-                        X2ClickShare_3 = ?,X2ConversionShare_3 = ?,where SearchTerm = ?`;
+                        X2ConversionShare_2 = ?,
+                        X2ClickedAsin_3 = ?,
+                        X2Product_3 = ?,
+                        X2ClickShare_3 = ?,
+                        X2ConversionShare_3 = ? 
+                        where SearchTerm = ?`;
                         const array = [++rowData.SearchCount2, rank, row[3], row[4], row[5],
                         row[6], row[7], row[8], row[9], row[10], row[11], row[12],
                         row[13], row[14], words];
@@ -246,12 +255,22 @@ const f1 = function () {
                 sqliteDB.getDataPromise(sql, [words]).then(function (rowData) {
                     if (rowData) {
                         // 更新数量
-                        const sql = `update ${tbNme} set SearchCount1 = ?, Rank1 = ?,
-                        X1ClickedAsin_1 = ?, X1Product_1 = ?, , X1ClickShare_1 = ?,
-                        X1ConversionShare_1 = ?, X1ClickedAsin_2 = ?, X1Product_2 = ?,
+                        const sql = `update ${tbNme} set 
+                        SearchCount1 = ?, 
+                        Rank1 = ?,
+                        X1ClickedAsin_1 = ?, 
+                        X1Product_1 = ?, 
+                        X1ClickShare_1 = ?,
+                        X1ConversionShare_1 = ?, 
+                        X1ClickedAsin_2 = ?, 
+                        X1Product_2 = ?,
                         X1ClickShare_2 = ?,
-                        X1ConversionShare_2 = ?,X1ClickedAsin_3 = ?,X1Product_3 = ?,
-                        X1ClickShare_3 = ?,X1ConversionShare_3 = ?,where SearchTerm = ?`;
+                        X1ConversionShare_2 = ?,
+                        X1ClickedAsin_3 = ?,
+                        X1Product_3 = ?,
+                        X1ClickShare_3 = ?,
+                        X1ConversionShare_3 = ? 
+                        where SearchTerm = ?`;
                         const array = [++rowData.SearchCount1, rank, row[3], row[4], row[5],
                         row[6], row[7], row[8], row[9], row[10], row[11], row[12],
                         row[13], row[14], words];
@@ -329,16 +348,19 @@ if (cfgMonth) {
             return sqliteDB.createTable(createTableSql);
         })
         .then(f3).then(function () {
-            return new Promise(function () {
+            return new Promise(function (resolve, reject) {
                 clearInterval(timer3);
+                resolve();
             })
         }).then(f2).then(function () {
-            return new Promise(function () {
+            return new Promise(function (resolve, reject) {
                 clearInterval(timer2);
+                resolve();
             })
         }).then(f1).then(function () {
-            return new Promise(function () {
+            return new Promise(function (resolve, reject) {
                 clearInterval(timer1);
+                resolve();
             })
         }).catch(function (err) {
             console.error(err);
