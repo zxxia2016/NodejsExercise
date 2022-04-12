@@ -4,7 +4,7 @@ const fs = require('fs')
 let tbNme = `tb_${new Date().getTime()}`;
 // tbNme = `tb_1649405786104`;
 
-const OPEN_TIMER = true;
+const OPEN_TIMER = false;
 const TIMER_DELTA = 5000;
 
 var SqliteDB = require('./sqlite.js').SqliteDB;
@@ -45,7 +45,7 @@ else {
         console.error("====================配置月份数值错误====================");
     }
     else {
-        console.log(`找到分析月份为：${cfgMonth}`);
+        console.log(`分析月份为：${cfgMonth}`);
     }
 }
 //----------------------------------------------------------------------------------
@@ -140,7 +140,7 @@ let f3 = function () {
                 reject(err);
             })
             .on('end', function (err) {
-                console.log(`读取${cfgMonth}月表时间为：${(new Date().getTime() - beginMonth3) / 1000 / 3600} 小时`)
+                console.log(`读取${cfgMonth}月表时间为：${(new Date().getTime() - beginMonth3) / 1000 / 60} 分钟`);
                 console.log(`读取总数为: ${month3RowCount}`);
                 resolve();
             });
@@ -218,7 +218,7 @@ const f2 = function () {
                 console.error('error', err);
             })
             .on('end', function (err) {
-                console.log(`读取${month2}月表时间为：${(new Date().getTime() - beginMonth2) / 1000 / 3600} 小时`);
+                console.log(`读取${month2}月表时间为：${(new Date().getTime() - beginMonth2) / 1000 / 60} 分钟`);
                 console.log(`读取总数为: ${month2RowCount}`);
                 resolve();
             });
@@ -244,7 +244,7 @@ const f1 = function () {
 
                 if (OPEN_TIMER) {
                     timer1 = setInterval(() => {
-                        console.log(`month2RowCount: ${month2RowCount}`);
+                        console.log(`month1RowCount: ${month1RowCount}`);
                     }, TIMER_DELTA);
                 }
             })
@@ -294,7 +294,7 @@ const f1 = function () {
                 console.error('error', err);
             })
             .on('end', function (err) {
-                console.log(`读取${month1}月表时间为：${(new Date().getTime() - beginMonth1) / 1000 / 3600} 小时`);
+                console.log(`读取${month1}月表时间为：${(new Date().getTime() - beginMonth1) / 1000 / 60} 分钟`);
                 console.log(`读取总数为: ${month1RowCount}`);
                 resolve();
             });
@@ -304,7 +304,8 @@ const f1 = function () {
 
 
 if (cfgMonth) {
-    const file = `./tmp/data.db`;
+    const file = ":memory:";
+    // const file = `./tmp/data.db`;
     sqliteDB.createDataBase(file)
         .then(function () {
             const createTableSql = `create table if not exists ${tbNme}(
@@ -371,6 +372,7 @@ if (cfgMonth) {
         }).then(f1).then(function () {
             return new Promise(function (resolve, reject) {
                 clearInterval(timer1);
+                console.log(`总共花费时间为：${(new Date().getTime() - beginMonth3) / 1000 / 60} 分钟`);
                 resolve();
             })
         }).catch(function (err) {
