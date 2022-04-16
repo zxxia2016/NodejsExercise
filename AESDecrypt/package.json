@@ -1,0 +1,15 @@
+{
+  "name": "aes",
+  "version": "1.0.0",
+  "description": "<!--lint disable no-literal-urls-->\r <p align=\"center\">\r   <a href=\"https://nodejs.org/\">\r     <img\r       alt=\"Node.js\"\r       src=\"https://nodejs.org/static/images/logo-light.svg\"\r       width=\"400\"\r     />\r   </a>\r </p>",
+  "main": "app.js",
+  "dependencies": {
+    "npm": "^6.14.4"
+  },
+  "devDependencies": {},
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC"
+}
